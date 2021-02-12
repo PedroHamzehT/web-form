@@ -1,10 +1,13 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label>Email: </label>
     <input type="email" required v-model="email">
 
     <label>Password: </label>
     <input type="password" required v-model="password">
+    <div v-if="passwordError" class="error">
+      {{ passwordError }}
+    </div>
 
     <label>Role: </label>
     <select v-model="role">
@@ -35,14 +38,12 @@
       <input type="checkbox" value="Mario" v-model="names">
       <label>Mario</label>
     </div>
-  </form>
 
-  <p>Email: {{ email }} </p>
-  <p>Password: {{ password }} </p>
-  <p>Role: {{ role }} </p>
-  <p>Terms: {{ terms }}</p>
-  <p>Names: {{ names }}</p>
-</template>
+    <div class="submit">
+      <button type="submit">Create an Account</button>
+    </div>
+  </form>
+</template>/
 
 <script>
 export default {
@@ -54,7 +55,8 @@ export default {
       terms: false,
       names: [],
       tempSkill: '',
-      skills: []
+      skills: [],
+      passwordError: '',
     }
   },
   methods: {
@@ -69,6 +71,18 @@ export default {
     },
     deleteSkill(skill) {
       this.skills = this.skills.filter(item => (item !== skill))
+    },
+    handleSubmit() {
+      // validate password
+      this.passwordError = this.password.length > 5 ? '' : 'Password must be at least 6 chars long'
+      if(!this.passwordError) {
+        console.log('Email: ' + this.email)
+        console.log('Password: ' + this.password)
+        console.log('Role: ' + this.role)
+        console.log('Terms: ' + this.terms)
+        console.log('Names: ' + this.names)
+        console.log('Skills: ' + this.skills)
+      }
     }
   }
 }
