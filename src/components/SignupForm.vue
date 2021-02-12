@@ -15,7 +15,7 @@
     <label>Skills: </label>
     <input type="text" v-model="tempSkill" @keyup="addSkill">
     <div v-for="skill in skills" :key="skill" class="pill">
-      {{ skill }}
+      <span @click="deleteSkill(skill)">{{ skill }}</span>
     </div>
 
     <div class="terms">
@@ -66,6 +66,9 @@ export default {
 
         this.tempSkill = ''
       }
+    },
+    deleteSkill(skill) {
+      this.skills = this.skills.filter(item => (item !== skill))
     }
   }
 }
